@@ -1,0 +1,1 @@
+window.addEventListener("load",(function(e){document.querySelector("#target").textContent="This is message by TypeScript."}));
