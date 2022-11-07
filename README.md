@@ -298,6 +298,8 @@ switch(typeof(idA)){
 ```
 
 // Readonly 読み取り専用のユーティリティ型
+// Readonly<型>
+// <>は総称型
 type data = [string ,number]
 type reqData = Readonly<data>
 
@@ -309,9 +311,306 @@ fuga[0] = "saburo" //Cannot assign to '0' because it is a read-only property.
 
 ```
 
+### シンボル
+すべての値がユニークであることが保証されている型
 
+```
 
-``
+// 変数 = Symbol (値)
+// typeof では[symbol]となる
+// 自分自身以外に等しい値のものが存在しない
 
+```
+const a1:string = "ok"
+const a2:string = "ok"
 
+console.log(a1==a2)
+console.log(a1===a2)
+
+const b1:unique symbol = Symbol("ok")
+const b2:unique symbol = Symbol("ok")
+
+console.log(b1==b2)
+console.log(b1===b2)
+
+//This condition will always return 'false' since the types 'typeof b1' and 'typeof b2' have no overlap.
+```
+
+## Chapter3
+
+### 関数
+
+```
+function hello(name:string){
+  //
+}
+
+function hello(name:string): string{
+  //
+}
+```
+
+### 複数の値を戻す
+
+```
+function hello(name:string):[price:number,tax:number]{
+
+}
+// 戻り値をそれぞれ変数代入できる
+let [変数1,変数2,...] = 関数()
+
+//sample
+function calcTax(price:number):[price:number, tax:number]{
+    const p = price/1.1
+    const t = price -p
+    return[p,t]
+}
+
+function printTax (price:number):void{
+    const [pr,tx] = calcTax(price)
+    console.log(price+"本体価格:" + pr + "、税"+tx)
+}
+
+printTax(2750)
+printTax(3080)
+```
+
+### 引数に条件式をつかう
+
+```
+//function 名前 (型1|型2...){}
+
+function printPerson(id:number | string name:string,age:number):void{
+    switch (typeof(id)){
+        case 'string':
+        console.log('your id is "' + id + '('+ age + ')' )
+        break
+        case 'number'
+        console.log("No," + id)
+        break
+        default:
+        console.log('wrong id ...')
+    }
+}
+
+printPerson(10,"taro",39)
+printPerson('flower',"hanako",28)
+```
+
+### オプション引数
+
+オプションは null 許容型。
+関数の引数に使うことで、省略できる引数を作ることができる。
+関数の中では３項演算子で null である可能性を考えてコーディングする・
+
+```
+//let 変数 = 引数 ? 引数 : 代わりの値
+
+function printPerson(name?:string , age?number):void{
+    const nameval = name ? name : "no-name"
+    const ageval = age ? String(age) : '-'
+    console.log('Name:' + nameval + ' (' + ageval + ')')
+}
+printPerson("taro",39)
+printPerson("taro")
+printPerson()
+```
+
+### 初期値による null 対応
+
+```
+function printPerson(name:string = 'no-name', age:number = -1 ):void{
+    console.log('Name:' + name + ' (' + age + ')')
+}
+```
+
+### 可変長引数
+
+```
+const f = (...data:number[]):number =>{
+    let total = 0;
+    for(let i of data ){
+        total += i
+    }
+    return total
+}
+
+console.log(f(1,2,3,4,5))
+```
+
+### 無名関数
+
+```
+function (引数): 戻り値{}
+
+const f = function(name : string):void {
+  console.log("Hello, " + name + "!")
+}
+
+f("taro")
+```
+
+### アロー関数
+
+```
+// (引数): 戻り値=>実行する処理
+// const f = アロー関数
+// (name:string):void =>
+const f = (name : string):void => {
+  console.log("Hello, " + name + "!")
+}
+
+f("taro")
+```
+
+### 関数は、値である
+
+typeof で調べると"function"となる
+
+### function とアロー関数の違い
+
+```
+
+//これはエラー
+hello("taro")
+hello("HmacKeyGenParams")
+
+const hello = (name:string)=>{
+    console.log("Hello, "+ name);
+}
+
+// これはOK
+hello("taro")
+hello("HmacKeyGenParams")
+
+function hello(name:string):void{
+console.log("Hello, "+ name);
+}
+
+```
+
+### 内部関数
+
+```
+const f = (n:number){
+    const inF = (n:number):void=>{
+        console.log("value:" + n)
+    }
+    let total = 0
+    for (let i =1;i<=n;i++){
+        total += i
+        inF(total)
+    }
+}
+f(10)
+```
+
+### 引数に関数を使う
+
+引数の時は大文字 Function なので注意
+
+```
+const func = (n:number,f:Function):void=>{
+    let res = f(n)
+    console.log("Result:" + res)
+}
+
+const double = (n:number)=> n* 2
+const total = (n:number)=> {
+    let total = 0
+    for(let i = 1;i<=n;i++){
+        total += i
+    }
+    return total
+}
+
+const num = 100
+func(num,double)
+func(num,total)
+```
+
+### 1 行だけの計算式
+
+1 行しかない場合はシンプルにかける
+
+```
+const double =(num:number) => num*2
+```
+
+### 関数の型
+
+引数と戻り値まで指定した関数の型
+
+```
+// number の値を引数に持ち、numberかstringが戻り値の関数をfに設定するようになった
+// ただ、Functionよりも細かく関数の具体的な内容を設定できる
+consst func = (n:number, f:(n:number)=>number|string):void=>{
+  let rest= f(n)
+  console.log("Result:" + res)
+}
+```
+
+### 数値とテキストの関数を引数にする
+
+```
+const func = (n:number, f(n:number)=>number|string):void=> {
+  let ret = f(n)
+  console.log("Result: "+ res)
+}
+
+const double = (n:number):number =>n*2
+const word = (n:number):string => {
+    const w = ['0','1',"2","3"]
+    const s = String(n)
+    let res:string [] = []
+    for(let i = 0;i< s.length;i++){
+        let c = s.charAt(i)
+        res.push(w[Number(c)])
+    }
+    return res.join("")
+}
+
+const num = 1230
+func(num,double)
+func(num,word)
+
+```
+
+### 戻り値に関数を使う
+
+関数そのものを引数に指定したり、戻り値として使ったりする関数を高階関数とよぶ。
+
+```
+const f = (tax:number):(n:number)=>number =>{
+    return (n:number) => n * (1 + tax)
+}
+
+const f1 = f(0.1)
+const f2 = f(0.08)
+
+const price = 123400
+console.log(f1(price))
+console.log(f2(price))
+```
+
+### クロージャー
+
+定義された環境を保ち、その中で動く関数。関数閉包。
+
+```
+const f = (n:number):() => number => {
+    let count:number = 0
+    return ():number => {
+        count += n
+        return count
+    }
+}
+
+const f1 = f(1)
+const f2 = f(2)
+const f3 = f(3)
+
+for (let i = 0;i< 10; i++){
+    console.log(f1()+ '\t' + f2() + '\t' +f3())
+}
 ```
