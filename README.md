@@ -614,3 +614,136 @@ for (let i = 0;i< 10; i++){
     console.log(f1()+ '\t' + f2() + '\t' +f3())
 }
 ```
+
+### エラーと例外
+
+```
+const f = (arr?:any[]):void => {
+    let res = 'Array: '
+    for ( let i of arr) {
+        res += String(i) + '\t'
+    }
+    console.log(res)
+}
+
+f(['ok','NG'])
+f([10,20,30])
+f() // arr is not iterable
+```
+
+### try 構文を使う
+
+```
+try {
+   // 例外処理
+} catch(e) {
+    // 例外発生時の処理
+} finally {
+    // 構文終了の処理
+}
+```
+
+### 例外を try で処理
+
+```
+const f = (arr?:any[]):void => {
+    let res = 'Array: '
+    for (let i of arr) {
+        res+= String(i)+ '\t'
+    }
+    console.log(res)
+}
+
+try {
+    f(['ok','NG'])
+    f([10,20,30])
+    f()
+} catch(e) {
+    console.log(e)
+}
+```
+
+### 例外を発生させる関数
+
+```
+const f = (n:number):[number,Error?] => {
+  if (n<0){
+    return [n, Error("負の値です。")]
+  }
+  let total =0
+  for (let i = 1; i<=n ;i++)
+    total += i
+  return [total]
+}
+
+
+```
+
+### Error を返す関数
+
+```
+const f = (n:number):[number , Error?] {
+  if (n<0){
+    return [n, Error("負の値です")]
+  }
+  let total = 0
+  for (let i = 1;i<=n;i++)
+  total+=i
+  return[total]
+}
+
+let [res1,err1] = f(100)
+if(err1 == undefined)
+    console.log(res1)
+else console.log(res1)
+
+let[res2,err2] = f(-100)
+if(err2 == undefined)
+    console.log(res2)
+else console.log(err2)
+
+```
+
+### 例外を発生させる関数
+
+```
+const f = (n:number) : number => {
+  if(n<0){
+    throw Error("負の数です")
+  }
+  let total = 0
+  for (let i = 1;i<=n;i++)
+    total+=i
+    return total
+
+}
+
+let re1 = f(100)
+console.log(re1)
+let re2 = f(-100)
+console.log(re2)
+```
+
+### try で例外を補足する
+
+```
+const f = (n:number):number => {
+    if (n<0){
+        throw Error("負の数です")
+    }
+
+    let total =0
+    for (let i = 1;i<=n;i++)
+        total+=i
+    return total
+}
+
+try {
+    let re1 = f(100)
+    console.log(re1)
+    let re2 = f(-100)
+    console.log(re2)
+}catch(e){
+       console.log(e)
+}
+```
