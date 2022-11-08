@@ -747,3 +747,30 @@ try {
        console.log(e)
 }
 ```
+
+### 総称型(ジェネリクス) について
+数値を引数で渡したら数値の結果を返し、テキストを渡したらテキストを返すような関数
+```
+// function 関数<T> (引数) : 戻り値
+// function 関数<T> (引数: T) : T
+
+function getRnd<T> (values: T[]): T {
+    const r = Math.floor(Math.random() * values.length)
+    return values[r]
+}
+
+const data1 = [0,2,4,6,8,10]
+const data2 = ["グー","チョキ","パー"]
+const data3 = [true ,false]
+
+for (let i = 0;i< 10 ;i++){
+    const re1 = getRnd(data1)
+    const re2 = getRnd(data2)
+    const re3 = getRnd(data3)
+    const res = re1 + '(' + typeof(re1) + ')\t'
+    + re2 + '(' + typeof(re2) + ')\t'
+    + re3 + '(' + typeof(re3) + ')\t'
+    console.log(res)
+}
+```
+
