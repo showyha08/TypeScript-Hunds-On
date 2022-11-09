@@ -594,7 +594,6 @@ console.log(f2(price))
 ```
 
 ### クロージャー
-
 定義された環境を保ち、その中で動く関数。関数閉包。
 
 ```
@@ -772,5 +771,48 @@ for (let i = 0;i< 10 ;i++){
     + re3 + '(' + typeof(re3) + ')\t'
     console.log(res)
 }
+```
+
+### ジェネレータと遅延評価
+呼び出すごとに数字をカウントしていく関数
+
+```
+// function * 名前 (引数) {
+//    yield 値
+// }
+
+function* fibo(n:number) {
+    let n1 = 0
+    let n2 = 1
+    for (let i = 0; i<=n+3;i++){
+        yield n1
+        let n3 = n1 +n2
+        n1 = n2
+        n2 = n3
+    }
+}
+
+const n = 10
+let fb = fibo(n)
+for (let i=0; i<=n + 3 ;i++){
+    let ob = fb.next()
+    console.log(ob.value)
+}
+
+```
+
+
+### 非同期処理とPromise
+```
+//  function 関数名 (引数) : Promise　{
+//    return new Promise ((関数) => {
+//        関数()
+//    })
+//  }
+
+//function 関数名(引数) : Promise {
+//  return <Promise>
+//}
+
 ```
 
