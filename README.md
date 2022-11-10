@@ -839,3 +839,10 @@ console.log("do something...")
 
 ```
 
+### コンソールプログラム
+Node.jsの引数は、process.argvにまとまっている
+```
+process.argv[0] = nodeコマンドのパス
+process.argv[1] = スクリプトファイルのパス
+process.argv[2]以降 = コマンド実行時の引数
+```
