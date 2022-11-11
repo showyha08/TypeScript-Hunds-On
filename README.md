@@ -594,6 +594,7 @@ console.log(f2(price))
 ```
 
 ### クロージャー
+
 定義された環境を保ち、その中で動く関数。関数閉包。
 
 ```
@@ -748,7 +749,9 @@ try {
 ```
 
 ### 総称型(ジェネリクス) について
+
 数値を引数で渡したら数値の結果を返し、テキストを渡したらテキストを返すような関数
+
 ```
 // function 関数<T> (引数) : 戻り値
 // function 関数<T> (引数: T) : T
@@ -774,6 +777,7 @@ for (let i = 0;i< 10 ;i++){
 ```
 
 ### ジェネレータと遅延評価
+
 呼び出すごとに数字をカウントしていく関数
 
 ```
@@ -801,8 +805,8 @@ for (let i=0; i<=n + 3 ;i++){
 
 ```
 
+### 非同期処理と Promise
 
-### 非同期処理とPromise
 ```
 //  function 関数名 (引数) : Promise　{
 //    return new Promise ((関数) => {
@@ -840,9 +844,29 @@ console.log("do something...")
 ```
 
 ### コンソールプログラム
-Node.jsの引数は、process.argvにまとまっている
+
+Node.js の引数は、process.argv にまとまっている
+
 ```
 process.argv[0] = nodeコマンドのパス
 process.argv[1] = スクリプトファイルのパス
 process.argv[2]以降 = コマンド実行時の引数
+```
+
+### オブジェクト
+
+```
+const person = {
+    name:"taro",
+    age:39,
+    print:function():void {
+        console.log(this.name+ '('+ this.age + ')')
+    }
+}
+
+person.print()
+//プロパティ
+person.name = 'hanako'
+person.age = 28
+person.print()
 ```
