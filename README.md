@@ -853,7 +853,9 @@ process.argv[1] = スクリプトファイルのパス
 process.argv[2]以降 = コマンド実行時の引数
 ```
 
-### オブジェクト
+## オブジェクト
+
+### オブジェクトの基本
 
 ```
 const person = {
@@ -869,4 +871,316 @@ person.print()
 person.name = 'hanako'
 person.age = 28
 person.print()
+
+//必要に応じて追加していくケースに便利
+const person = Object()
+person.name = 'hanako'
+person.age = 28
+person.print = function():void {
+    console.log(this.name + '(' + this.age + ')')
+}
 ```
+
+### ファクトリ関数
+
+```
+// ファクトリ関数について
+function Person(n:string, a:number):{
+    name:string, age:number, print:()=>void} {
+        return {
+            name:n,
+            age:a,
+            print: function(){
+                console.log(this.name + '(' + this.age + ')')
+            }
+        }
+    }
+}
+
+const taro = Person('taro',39)
+const hana = Person('hanako',28)
+taro.print()
+hana.print()
+
+// コンストラクタ関数（JSの場合）
+// thisの扱いが変わっているのでTypescriptでは動かない
+function Person(n,a) {
+    this.name = n;
+    this.age = a;
+    this.print = function() {
+        console.log(this.name+ '('+this.age+')');
+    }
+}
+```
+
+### オブジェクトを引数に使う
+
+```
+//オブジェクトを引数に渡す時は参照になる
+type person  = {name:string,age:number}
+
+function setData(ob:person,n:string,a:number):person {
+    ob.name = n
+    ob.age = a
+    return ob
+}
+
+const ob1:person = {name:'taro',age:39}
+const ob2:person = setData(ob1,'hanako',28)
+
+console.log(ob1)
+console.log(ob2)
+// 同じ結果になる
+// [LOG]: {
+//  "name": "hanako",
+//  "age": 28
+//}
+
+```
+
+#### 参照について
+
+オブジェクトは、変数に代入される時、そのオブジェクトそのものではなく、オブジェクトの参照が設定されます。３章とは、オブジェトを示すための値です。関数を呼び出したおき、その引数には変数 ob1 のおぬジェクトの参照が渡されます。つまり、ob1 に設定されているオブジュエクトを示す値がわたされるのです。そしてその中で ob.name = n などの操作をすると、引数に渡される「オブジェクトを示す値」をもとに、その示す先のオブジェクトのプロパティを操作します。
+
+つまり、オブジェクトは引数で渡されるとき、オブジェクトが複製されて渡されるのではなく、同じオブジェクトを示す値が渡され、オブジェクトを操作することになるのです。
+、ここでは引数について説明をしましたが、「参照が渡される」というのは変数全般の話です。
+従って、変数から別の変数にオブジェクトを代入するような場合も同じです。オブジェクトが代入された変数を別の変数に代入すると、２つの変数は同じオブジェクトを参照します。
+
+#### type によるオブジェクトの型エイリアス
+
+```
+type person = {name:string, age:number}
+// これがあるとあるといちいち{name:string,age:number}と書かなくて良くなる
+```
+
+### オブジェクトの分割代入
+
+```
+type person = {name:{first:string,second:string},age:number}
+
+const ob1:person = {name:{first:'taro',second:'yamada'},age:39}
+const first = ob1.name.first
+const second = ob1.name.second
+const age =ob1.age
+
+console.log(first + "-" + second + '::' + age)
+
+```
+
+```
+
+//分割代入を使うと・・・
+type person = {name:{first:string,second:string},age:number}
+
+const ob1:person = {name:{first:'taro',second:'yamada'},age:39}
+const {name:{first,second},age} = ob1
+
+console.log(first+'-'+second+'::' + age)
+```
+
+```
+//一部を取り出すこともできる
+const {name:{first}} = ob1
+console.log(first)
+
+// こうはかけない
+// const {first,second} = ob1
+```
+
+### プロパティのオプションと Readonly
+
+```
+type person= {readonly name:string, mail?:string, age?:number ,print:()=>void}
+
+const ob1:person = {
+    name:'taro',
+    age:39,
+    print:function():void{
+        console.log(this.name + ':' + this.age)
+    }
+}
+
+const ob2:person = {
+    name:'hanako',
+    mail:'hanako@flower',
+    print:function():void{
+        console.log(this.name + ':' + this.mail)
+    }
+}
+
+// ob1.name = "Taro"
+
+ob1.print()
+ob2.print()
+```
+
+### クラスノ利用
+
+・JavaScript ではプロトタイプベース
+・他の言語ではクラスベースオブジェクト指向
+
+```
+class 名前 {
+  プロパティ:値
+  プロパティ:値
+  メソッド：戻り値
+}
+
+///インスタンス
+変数= new クラス()
+```
+
+```
+class Person {
+    name:string = 'no-name'
+    mail?:string
+    age?:number
+    print():void{
+        const m1:string = this.mail? this.mail:'no-mail'
+        const ag:number = this.age ? this.age : -1
+        console.log(this.name + '(' + m1+','+ag+')')
+    }
+}
+
+const taro = new Person()
+taro.name = 'taro'
+taro.mail = 'taro@yamada'
+taro.age = 39
+
+taro.print()
+```
+
+### コンストラクタ
+
+```
+class Person {
+    name:string = 'no-name'
+    mail:string
+    age:number
+
+    constructor(name:string, mail:string = 'no-mail',age:number = -1){
+        this.name= name
+        this.mail=mail
+        this.age= age
+    }
+
+    print():void {
+        console.log(this.name + '(' + this.mail+','+this.age+')')
+    }
+}
+
+const taro = new Person ('taro','taro@yamada',39)
+const hanako = new Person('hanako','hanako@flow')
+const sachiko = new Person('sachiko')
+
+taro.print()
+hanako.print()
+sachiko.print()
+```
+
+### インスタンスのクラスを調べる
+
+```
+// これはobjectが返される
+type hoge = {name:string}
+const ob1:hoge = {name:"huga"}
+
+console.log(typeof(ob1))
+
+// 特定のクラスのインスタンス化を確認する
+// インスタンス　instanceof クラス
+
+// インスタンスのクラス名をえる
+インスタンス.constructor.name
+
+// クラスの名前を得る
+// プロパティにnameがあっても問題ない。プロパティはインスタンスにのみ存在するのでクラスには存在しない
+クラス.name
+
+```
+
+```
+class Person {
+    name:string = 'no-name'
+    mail:string
+    age:number
+
+    constructor(name:string, mail:string = 'no-mail',age:number = -1){
+        this.name= name
+        this.mail=mail
+        this.age= age
+    }
+
+    print():void {
+        console.log(this.name + '(' + this.mail+','+this.age+')')
+    }
+}
+
+const taro= new Person('taro','taro@yamada',39)
+const hanako = new Person('hanako','hanako@flowe')
+console.log(taro instanceof Person === hanako instanceof Person === true)
+
+console.log(taro.constructor.name)
+console.log(hanako.constructor.name)
+console.log(Person.name)
+console.log(hanako.name) //hanako
+```
+
+### クラスの継承
+```
+//class 新しいクラス extends 継承するクラス{}
+
+class Person {
+    name:string = 'no-name'
+    mail:string
+    age:number
+
+    constructor(name:string, mail:string = 'no-mail',age:number = -1){
+        this.name= name
+        this.mail=mail
+        this.age= age
+    }
+
+    print():void {
+        console.log(this.name + '(' + this.mail+','+this.age+')')
+    }
+}
+
+// enumは enum School{ junior,juniorHigh, high,other}でも良いが、console.logでtextに変換されるときに整数になってしまうのでこのようにする
+enum School {
+    junior = 'junior',
+    juniorHigh = 'juniorHigh',
+    high = 'high',
+    other = 'other'
+}
+
+class Student extends Person {
+    school?:School
+    grade?:number
+
+    constructor(name:string,school:School,grade:number) {
+        //スーパークラスのコンストラクタを呼び出す
+        super(name)
+        this.school = School
+        this.grade = grade
+        switch(school) {
+            case School.junior:
+            this.age = 6 * this.grade;break
+            case School.juniorHigh:
+            this.age = 12 + this.grade;break
+            case School.high:
+            this.age = 15 * this.grade;break
+            default:
+            this.age = -1
+        }
+    }
+}
+
+const taro = new Person('taro','taro@yamada',39)
+const hanako = new Student('hanako', School.high,2)
+
+taro.print()
+hanako.print()
+
+```
+
