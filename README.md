@@ -1593,3 +1593,24 @@ StaticHuman.print()
 StaticHuman.set('hanako',28)
 StaticHuman.print()
 ```
+
+### パラメータプロパティ
+値を補完するだけで、後から変更したりする必要がないもの
+読み取りのみのプロパティ=パラメータプロパティ
+コンストラクタの引数をそのままプロパティとして扱えるようにする機能。
+
+```
+class Human {
+  constructor(readonly name:string, readonly age:number){}
+
+  print():void{
+    console.log(this.name + '(' + this.age + ')' )
+  }
+}
+
+const taro = new Human('taro',39)
+taro.print()
+
+const hana = new Human('hanako',28)
+hana.print()
+```
