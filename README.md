@@ -1526,3 +1526,70 @@ class Employee implements People {
 const ichiro = new Employee('ichiro','Baseball Inc.',new Date('1982/10/10'))
 ichiro.print()
 ```
+
+### 抽象クラスについて
+具体的な処理を持たない抽象的な存在としてのクラス。
+```
+abstract class クラス名{
+  abstract メソッド():型
+}
+```
+
+```
+abstract class Human {
+  abstract print():void
+}
+
+class Person extends Human{
+  ////
+}
+
+class Student extends Human{
+  ////
+  super
+}
+```
+
+
+### 抽象クラスとインターフェースの違い
+・他にクラスを継承する必要があるか？
+抽象クラスの場合は他のクラスと同時に継承できない。
+・プロパティを義務付ける必要があるか？
+抽象クラスはメソッドを定義するもの。抽象プロパティというものはない。
+・protectedメソッドかpublicメソッドか？
+インターフェースはpublicなメソッドを定義するもの。
+protectedを使いたい場合は抽象クラスを使う必要がある。
+
+### 静的メンバーについて
+例えば、何かの計算を１つにまとめたもの。
+引数に値をw足すと結果を返すメソッドばかりのクラス。
+これはインスタンスが必要か？直接渡せた方がかんたん。
+この場合に静的メンバーとして用意することで、くらすから直接使える。
+メンバーというのは、クラスに用意されているプロパティやメソッドのことです。
+
+```
+static プロパティ:型
+static メソッド(引数):型
+```
+
+### 静的メンバーによるStaticHumanクラス
+```
+class StaticHuman{
+  static fullname:string //nameプロパティが予約されているため使用不可。
+  static age:number
+
+  static set(nm:string,ag:number):void {
+    this.fullname = nm
+    this.age = ag
+  }
+
+  static print():void {
+    console.log(this.fullname + '(' + this.age + ')')
+  }
+}
+
+StaticHuman.set('taro',39)
+StaticHuman.print()
+StaticHuman.set('hanako',28)
+StaticHuman.print()
+```
