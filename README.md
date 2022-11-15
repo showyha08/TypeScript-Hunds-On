@@ -1614,3 +1614,27 @@ taro.print()
 const hana = new Human('hanako',28)
 hana.print()
 ```
+
+### 総称型の利用
+どんな型の値でも使えるようなプロパティやメソッドを作成するときにつかう。
+クラス名の後に<>で型名を指定します。
+実行時に肩が確定する特殊な型指定
+```
+class Data<T> {
+  data?:T[]
+
+  constructor(...item:T[]) {
+    this.data = item
+  }
+
+  print():void {
+    if (this.data) {
+      for(let item of this.data) {
+        console.log(item)
+      }
+    } else {
+      console.log('no data...')
+    }
+  }
+}
+```
