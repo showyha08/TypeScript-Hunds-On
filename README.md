@@ -1638,3 +1638,36 @@ class Data<T> {
   }
 }
 ```
+
+### ユーティリティ型
+```
+type data =[string,number]
+type ReqData = Readonly<data>
+```
+ユーティリティ型はclassでも利用できる
+```
+type Human = {
+    name:string
+    mail?:string
+    age?:number
+}
+
+class Person {
+    human:Required<Human>
+
+    constructor(nm:string,ml:string,ag:number) {
+        this.human = {name:nm, mail:ml, age:ag}
+    }
+
+    print():void {
+        console.log(this.human.name + ' (' + this.human.age + '::' + this.human.mail + ')')
+    }
+}
+
+const taro = new Person('taro','taro@yamada',39)
+taro.print()
+```
+
+Readonly<T>変更不可にする
+Required<T>必須項目(オプション不可)にするもの
+Partial<T>すべてオプション(Optional)にするもの
