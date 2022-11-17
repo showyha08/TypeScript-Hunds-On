@@ -1,66 +1,71 @@
-import { MemoryDB } from "../../../node_modules/aws-sdk/index"
+import { MemoryDB } from "../../../node_modules/aws-sdk/index";
 
-let table: HTMLTableElement
-let message: HTMLInputElement
+let table: HTMLTableElement;
+let message: HTMLInputElement;
 
 function showTable(html: string) {
-  table.innerHTML = html
+  table.innerHTML = html;
 }
 
 function doAction() {
-  const msg = message.value
-  memo.add({ message: msg, date:new Date() })
-  memo.save()
-  memo.load()
-  showTable(memo.getHtml())
+  const msg = message.value;
+  memo.add({ message: msg, date: new Date() });
+  memo.save();
+  memo.load();
+  showTable(memo.getHtml());
 }
 
 function doInitial() {
-  memo.data = []
-  memo.save()
-  memo.load()
-  message.value = ''
-  showTable(memo.getHtml())
+  memo.data = [];
+  memo.save();
+  memo.load();
+  message.value = "";
+  showTable(memo.getHtml());
 }
 
 type Memo = {
-  message: string,
-  date:Date
-}
+  message: string;
+  date: Date;
+};
 
 class MemoData {
-  data: Memo[] = []
+  data: Memo[] = [];
 
-  add(mm: Memo): void{
-    this.data.unshift(mm)
+  add(mm: Memo): void {
+    this.data.unshift(mm);
   }
 
-  save(): void{
-    localStorage.setItem('memo_data',JSON.stringify(this.data))
+  save(): void {
+    localStorage.setItem("memo_data", JSON.stringify(this.data));
   }
 
-  load(): void{
-    const readed = JSON.parse(localStorage.getItem('memo_data'))
-    this.data = readed ? readed:[]
+  load(): void {
+    const readed = JSON.parse(localStorage.getItem("memo_data"));
+    this.data = readed ? readed : [];
   }
 
   getHtml(): string {
-    let html = '<thead><th>memo</th><th>date</th></thead><tbody>'
+    let html = "<thead><th>memo</th><th>date</th></thead><tbody>";
     for (let item of this.data) {
-      html += '<tr><td>' + item.message + '</td><td>' + item.date.toLocaleString() + '</td></tr>'
+      html +=
+        "<tr><td>" +
+        item.message +
+        "</td><td>" +
+        item.date.toLocaleString() +
+        "</td></tr>";
     }
-    return html + '</tbody>'
+    return html + "</tbody>";
   }
 }
 
-const memo = new MemoData()
+const memo = new MemoData();
 
-window.addEventListener('load', () => {
-  table = document.querySelector('#table')
-  message = document.querySelector('#message')
-  document.querySelector('#message')
-  document.querySelector('#btn').addEventListener('click', doAction)
-  document.querySelector('#initial').addEventListener('click', doInitial)
-  memo.load()
-  showTable(memo.getHtml())
-})
+window.addEventListener("load", () => {
+  table = document.querySelector("#table");
+  message = document.querySelector("#message");
+  document.querySelector("#message");
+  document.querySelector("#btn").addEventListener("click", doAction);
+  document.querySelector("#initial").addEventListener("click", doInitial);
+  memo.load();
+  showTable(memo.getHtml());
+});
