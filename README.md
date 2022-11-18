@@ -1717,3 +1717,58 @@ console.log(hana)
 //別プロパティあり:エラー
 //string以外の値:エラー
 ```
+
+### ユニオン型について
+
+複数の方を使いたい場合
+```
+//ユニオン型
+let data:string|number
+```
+
+```
+class Student {
+    name:string
+    school:string
+    grade:number
+
+    constructor(nm:string, sc:string, gr:number){
+        this.name = nm
+        this.school = sc
+        this.grade = gr
+    }
+
+    print():void{
+        console.log('<<' + this.name + ',' + this.school + ':' + this.grade + ' >>')
+    }
+}
+
+class Employee{
+    name:string
+    title:string
+    department:string
+
+    constructor(nm:string, tt:string, dp:string) {
+        this.name = nm
+        this.title = tt
+        this.department = dp
+    }
+
+    print():void {
+        console.log(this.name + '[' + this.title + ',' + this.department + ']')
+    }
+}
+
+type People = Student | Employee
+
+const taro:People = new Student ('taro','high school',3)
+const hana:People = new Employee ('hanako','president','sales')
+const sachi:People = new Student('sachiko','jinir-high school',1)
+const jiro:People = new Employee('jiro','director','labo')
+
+const data:People[] = [taro,hana,sachi,jiro]
+for(let item of data){
+    item.print()
+}
+```
+
