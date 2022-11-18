@@ -1671,3 +1671,49 @@ taro.print()
 Readonly<T>変更不可にする
 Required<T>必須項目(オプション不可)にするもの
 Partial<T>すべてオプション(Optional)にするもの
+
+
+## 型について
+### マップ型について
+```
+type 名前 = {[key in 型 : 型]}
+
+type stringArray = {
+    [key in string]:string
+}
+
+const data1:stringArray = {
+    'start':'最初の値',
+    'middle':'中央の値',
+    'end':'最後の値'
+}
+
+data1['finish'] = '**おしまい＊＊'
+data1[100] = 'ok' // 100はstringに変換される
+console.log(data1)
+```
+
+enumでキーを指定する
+```
+enum human {name='name',mail='mail'}
+
+type HumanMap = {
+    [key in human]: string
+}
+
+const taro:HumanMap = {
+    name:'taro',
+    mail:'taro@yamada'
+}
+
+console.log(taro)
+const hana:HumanMap = {
+    name:'hanako',
+    mail:'hanako@flower'
+}
+console.log(hana)
+
+//mailがない場合:エラー
+//別プロパティあり:エラー
+//string以外の値:エラー
+```
