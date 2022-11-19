@@ -1896,3 +1896,36 @@ console.log(taro)
 //}
 
 ```
+
+### Pick型による項目の選別
+既に用意されているタイプから必要な項目だけを抜き出した新しいタイプを作りたい
+```
+// 変数 = Pick<型,キー>
+
+type person_data = {
+    name:string,
+    mail:string,
+    address:string,
+    age:number
+}
+
+type person_keys = 'name'|'age'
+type human_keys = 'name'|'mail'|'address'
+
+type person = Pick<person_data,person_keys> //person_dataからnemeとageをpickしている
+type human = Pick<person_data,human_keys> //person_dataからnemeとmailとaddressをpickしている
+
+const taro:person = {
+    name:'taro',
+    age:39
+}
+
+const hana:human = {
+    name:'hanako',
+    mail:'hanako@flower',
+    address:'chiba'
+}
+
+console.log(taro)
+console.log(hana)
+```
