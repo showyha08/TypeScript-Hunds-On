@@ -1870,3 +1870,29 @@ const u:method_type = "private_method"
 const v:data_type = "personal_data" //エラーとなる
 ```
 
+### Record型によるレコードデータ作成
+```
+type 型名 = Record<キー|値>
+```
+
+Record型でデータを作成
+```
+type prop_name = 'name' | 'mail' | 'age' //ユニオン型
+type Person = Record<prop_name,string|number> //ユニオン型をキーに指定
+
+const taro:Person = {
+    name:'taro',
+    mail:'taro@yamada',
+    age:39
+}
+
+console.log(taro)
+
+// 以下と同じ
+//type Person = {
+//    name:string|number
+//    mail:string|number
+//    age:string| number
+//}
+
+```
