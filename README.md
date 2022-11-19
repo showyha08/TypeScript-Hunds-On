@@ -1984,3 +1984,69 @@ for (let item of data) {
     console.log(item)
 }
 ```
+
+### 名前空間について
+プログラムで作成する様々な要素を配置する仮想的な場所。
+既にある関数やクラスと名前がバッティングしてしまう可能性も生じる。
+```
+namespace 名前{
+...
+}
+```
+
+外部から利用できるようにするためにexportを使う
+```
+namespace 名前{
+    export function 関数(){}
+    export class クラス{}
+}
+以下のようなかたちで使う
+```
+名前空間.関数()
+new 名前空間.クラス
+```
+
+
+```
+namespace myapp {
+    namespace foundation {
+        export interface printable {
+            print():void
+        }
+
+        export interface stringable {
+            getString():string
+        }
+    }
+
+    export type Person = {
+        name:string
+        age:number
+    }
+
+    export class MyData implements
+        foundation.printable,
+        foundation.stringable{
+            people:Person[] = []
+            constructor(){}
+            add(nm:string, ag:number){
+                this.people.push({name:nm,age:ag})
+            }
+            print():void{
+                console.log('*** mydata ***\n' + this.getString())
+            }
+            getString():string{
+                let res = '[\n'
+                for (let item of this.people){
+                    res += ' "' +item.name + '(' + item.age +')",\n'
+                }
+                return res + ']'
+            }
+        }
+}
+
+const mydata = new myapp.MyData()
+mydata.add('taro',39)
+mydata.add('hanako',28)
+mydata.print()
+```
