@@ -1,71 +1,78 @@
-import { MemoryDB } from "../../../node_modules/aws-sdk/index";
+import { MyData } from "./lib";
 
-let table: HTMLTableElement;
-let message: HTMLInputElement;
+const mydata = new MyData();
+mydata.add("taro", 30);
+mydata.add("hanako", 28);
+mydata.print();
 
-function showTable(html: string) {
-  table.innerHTML = html;
-}
+// import { MemoryDB } from "../../../node_modules/aws-sdk/index";
 
-function doAction() {
-  const msg = message.value;
-  memo.add({ message: msg, date: new Date() });
-  memo.save();
-  memo.load();
-  showTable(memo.getHtml());
-}
+// let table: HTMLTableElement;
+// let message: HTMLInputElement;
 
-function doInitial() {
-  memo.data = [];
-  memo.save();
-  memo.load();
-  message.value = "";
-  showTable(memo.getHtml());
-}
+// function showTable(html: string) {
+//   table.innerHTML = html;
+// }
 
-type Memo = {
-  message: string;
-  date: Date;
-};
+// function doAction() {
+//   const msg = message.value;
+//   memo.add({ message: msg, date: new Date() });
+//   memo.save();
+//   memo.load();
+//   showTable(memo.getHtml());
+// }
 
-class MemoData {
-  data: Memo[] = [];
+// function doInitial() {
+//   memo.data = [];
+//   memo.save();
+//   memo.load();
+//   message.value = "";
+//   showTable(memo.getHtml());
+// }
 
-  add(mm: Memo): void {
-    this.data.unshift(mm);
-  }
+// type Memo = {
+//   message: string;
+//   date: Date;
+// };
 
-  save(): void {
-    localStorage.setItem("memo_data", JSON.stringify(this.data));
-  }
+// class MemoData {
+//   data: Memo[] = [];
 
-  load(): void {
-    const readed = JSON.parse(localStorage.getItem("memo_data"));
-    this.data = readed ? readed : [];
-  }
+//   add(mm: Memo): void {
+//     this.data.unshift(mm);
+//   }
 
-  getHtml(): string {
-    let html = "<thead><th>memo</th><th>date</th></thead><tbody>";
-    for (let item of this.data) {
-      html +=
-        "<tr><td>" +
-        item.message +
-        "</td><td>" +
-        item.date.toLocaleString() +
-        "</td></tr>";
-    }
-    return html + "</tbody>";
-  }
-}
+//   save(): void {
+//     localStorage.setItem("memo_data", JSON.stringify(this.data));
+//   }
 
-const memo = new MemoData();
+//   load(): void {
+//     const readed = JSON.parse(localStorage.getItem("memo_data"));
+//     this.data = readed ? readed : [];
+//   }
 
-window.addEventListener("load", () => {
-  table = document.querySelector("#table");
-  message = document.querySelector("#message");
-  document.querySelector("#message");
-  document.querySelector("#btn").addEventListener("click", doAction);
-  document.querySelector("#initial").addEventListener("click", doInitial);
-  memo.load();
-  showTable(memo.getHtml());
-});
+//   getHtml(): string {
+//     let html = "<thead><th>memo</th><th>date</th></thead><tbody>";
+//     for (let item of this.data) {
+//       html +=
+//         "<tr><td>" +
+//         item.message +
+//         "</td><td>" +
+//         item.date.toLocaleString() +
+//         "</td></tr>";
+//     }
+//     return html + "</tbody>";
+//   }
+// }
+
+// const memo = new MemoData();
+
+// window.addEventListener("load", () => {
+//   table = document.querySelector("#table");
+//   message = document.querySelector("#message");
+//   document.querySelector("#message");
+//   document.querySelector("#btn").addEventListener("click", doAction);
+//   document.querySelector("#initial").addEventListener("click", doInitial);
+//   memo.load();
+//   showTable(memo.getHtml());
+// });
