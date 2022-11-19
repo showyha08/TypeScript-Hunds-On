@@ -2056,3 +2056,95 @@ mydata.print()
 export：記述された要素を外部から利用できるようにするためのもの
 import ファイルなどのリソースから指定した要素を読込につかえるようにするためのもの
 
+```
+export interface printable {
+  print():void
+}
+
+export interface stringable {
+  getString():string
+}
+
+export type Person = {
+  name: string
+  age:number
+}
+
+export class MyData implements printable,stringable {
+  people: Person[] =[]
+  constructor() { }
+
+  add(nm: string, ag: number) {
+    this.people.push({name:nm, age:ag})
+  }
+
+  print(): void {
+    console.log('*** mydata *** \n' + this.getString())
+  }
+
+  getString(): string {
+    let res = '[\n'
+    for (let item of this.people) {
+      res += ' "' + item.name + ' (' + item.age + ')",\n'
+    }
+    return res + ']'
+  }
+}
+
+```
+
+### ミックスイン
+TypeScriptは１つのクラスしか継承できない。
+複数のクラスを継承することを多重継承とよぶが、TypeScriptがサポートしていない
+TypeScriptではミックスインという技術があり、複数のクラスをまとめて実装できる。
+```
+function applyMixins(delivedCtor: any, constructors:any[]){
+    constructors.forEach((baseCtor)=> {
+        Object.getOwnPropertyNames(baseCtor.prototype).forEach((name)=>{
+            Object.defineProperty(
+                delivedCtor.prototype,
+                name,
+                Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
+                Object.create(null)
+            )
+        })
+    })
+}
+
+class Person {
+    name:string = ''
+    title:string = ''
+
+    setPerson(nm:string, tt:string):void{
+        this.name = nm
+        this.title = tt
+    }
+}
+
+class Pet {
+    kind:string = ''
+    age:number = 0
+
+    setPet(k:string, ag:number):void {
+        this.kind =k
+        this.age =ag
+    }
+}
+
+class Me {
+    print():void {
+        console.log(this.name + ' (' + this.age + ')\n' +
+         '"' + this.title + '". pet is ' + this.kind + '!')
+    }
+}
+
+interface Me extends Person,Pet {}
+applyMixins(Me , [Person,Pet])
+
+const me = new Me()
+me.setPerson('taro','designer')
+me.setPet('cat',2)
+me.print()
+
+```
+
