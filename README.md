@@ -594,7 +594,6 @@ console.log(f2(price))
 ```
 
 ### クロージャー
-
 定義された環境を保ち、その中で動く関数。関数閉包。
 
 ```
@@ -1928,4 +1927,60 @@ const hana:human = {
 
 console.log(taro)
 console.log(hana)
+```
+
+### イテレータとfor...of
+for...ofではfor..inとは違い配列にあるようそだけを確実に取り出せる
+多数ある値から順に要素を取り出していくことができる仕組みをイテレータと呼ぶ。
+```
+[Symbol.iterator](){
+    return {
+        next():IteratorResult<T> {
+            return {done :真偽値, value:値}
+        }
+    }
+}
+```
+この[Symbol.iterator]は関数になっており、next():IteratorResult<T> という関数を持つオブジェクトを返すような処理が用意されています。
+このnext関数では,IteratorResultというインターフェースの値を返すようになっています。これはdoneとvalueという値を持つマップ型の値です。
+```
+class MyData<T> {
+    data:T[]=[]
+
+    constructor(...data:T[]){
+        this.data = data
+    }
+
+    add(val:T){
+        this.data.push(val)
+    }
+
+    //以下が無いとdata is not iterable でfor...ofでエラーとなる
+    [Symbol.iterator]() {
+        let pos = 0;
+        let items = this.data;
+
+        return {
+            next():IteratorResult<T> {
+                if (pos < items.length) {
+                    return {
+                        done: false,
+                        value:items[pos++]
+                    }
+                } else {
+                    return{
+                        done:true,
+                        value:null
+                    }
+                }
+            }
+        }
+    }
+}
+
+const data = new MyData<string>('one','two','three')
+
+for (let item of data) {
+    console.log(item)
+}
 ```
