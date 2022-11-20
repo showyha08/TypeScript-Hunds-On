@@ -594,6 +594,7 @@ console.log(f2(price))
 ```
 
 ### クロージャー
+
 定義された環境を保ち、その中で動く関数。関数閉包。
 
 ```
@@ -1329,19 +1330,22 @@ taro.print()
 hanako.print()
 ```
 
-### setterとgetter
+### setter と getter
+
 ```
 get メソッド():戻り値{}
 set メソッド(引数){}
 ```
 
 実装するメソッド
+
 ```
 get abc():string{...}
 set abc(value:string){...}
 ```
 
 実際の利用
+
 ```
 this.abc = 値
 変数 = this.abc
@@ -1420,10 +1424,10 @@ taro.print()
 hanako.print()
 ```
 
-
- ### インターフェースについて
+### インターフェースについて
 
 構造の定義をする
+
 ```
 interface 名前{
   プロパティ:型
@@ -1433,6 +1437,7 @@ interface 名前{
 ```
 
 #### インターフェースの実装
+
 ```
 enum School {
     junior = 'junior',
@@ -1480,8 +1485,8 @@ print():void{
 }
 ```
 
-
 #### インターフェースでオブジェクトをまとめる
+
 ```
 const taro:Person = new Person('taro','taro@yamada',39)
 const hanako:Student = new Student('hanako',School.high,2)
@@ -1496,6 +1501,7 @@ for(let item of data) {
 ```
 
 ### インターフェースの継承
+
 ```
 interface Human{
     name:string
@@ -1527,7 +1533,9 @@ ichiro.print()
 ```
 
 ### 抽象クラスについて
+
 具体的な処理を持たない抽象的な存在としてのクラス。
+
 ```
 abstract class クラス名{
   abstract メソッド():型
@@ -1549,19 +1557,20 @@ class Student extends Human{
 }
 ```
 
-
 ### 抽象クラスとインターフェースの違い
+
 ・他にクラスを継承する必要があるか？
 抽象クラスの場合は他のクラスと同時に継承できない。
 ・プロパティを義務付ける必要があるか？
 抽象クラスはメソッドを定義するもの。抽象プロパティというものはない。
-・protectedメソッドかpublicメソッドか？
-インターフェースはpublicなメソッドを定義するもの。
-protectedを使いたい場合は抽象クラスを使う必要がある。
+・protected メソッドか public メソッドか？
+インターフェースは public なメソッドを定義するもの。
+protected を使いたい場合は抽象クラスを使う必要がある。
 
 ### 静的メンバーについて
+
 例えば、何かの計算を１つにまとめたもの。
-引数に値をw足すと結果を返すメソッドばかりのクラス。
+引数に値を w 足すと結果を返すメソッドばかりのクラス。
 これはインスタンスが必要か？直接渡せた方がかんたん。
 この場合に静的メンバーとして用意することで、くらすから直接使える。
 メンバーというのは、クラスに用意されているプロパティやメソッドのことです。
@@ -1571,7 +1580,8 @@ static プロパティ:型
 static メソッド(引数):型
 ```
 
-### 静的メンバーによるStaticHumanクラス
+### 静的メンバーによる StaticHuman クラス
+
 ```
 class StaticHuman{
   static fullname:string //nameプロパティが予約されているため使用不可。
@@ -1594,6 +1604,7 @@ StaticHuman.print()
 ```
 
 ### パラメータプロパティ
+
 値を補完するだけで、後から変更したりする必要がないもの
 読み取りのみのプロパティ=パラメータプロパティ
 コンストラクタの引数をそのままプロパティとして扱えるようにする機能。
@@ -1615,9 +1626,11 @@ hana.print()
 ```
 
 ### 総称型の利用
+
 どんな型の値でも使えるようなプロパティやメソッドを作成するときにつかう。
 クラス名の後に<>で型名を指定します。
 実行時に肩が確定する特殊な型指定
+
 ```
 class Data<T> {
   data?:T[]
@@ -1639,11 +1652,14 @@ class Data<T> {
 ```
 
 ### ユーティリティ型
+
 ```
 type data =[string,number]
 type ReqData = Readonly<data>
 ```
-ユーティリティ型はclassでも利用できる
+
+ユーティリティ型は class でも利用できる
+
 ```
 type Human = {
     name:string
@@ -1671,9 +1687,10 @@ Readonly<T>変更不可にする
 Required<T>必須項目(オプション不可)にするもの
 Partial<T>すべてオプション(Optional)にするもの
 
-
 ## 型について
+
 ### マップ型について
+
 ```
 type 名前 = {[key in 型 : 型]}
 
@@ -1692,7 +1709,8 @@ data1[100] = 'ok' // 100はstringに変換される
 console.log(data1)
 ```
 
-enumでキーを指定する
+enum でキーを指定する
+
 ```
 enum human {name='name',mail='mail'}
 
@@ -1720,6 +1738,7 @@ console.log(hana)
 ### ユニオン型について
 
 複数の方を使いたい場合
+
 ```
 //ユニオン型
 let data:string|number
@@ -1772,6 +1791,7 @@ for(let item of data){
 ```
 
 ### ユニオン型を個別に処理する
+
 ```
 class Student {
     name:string
@@ -1840,9 +1860,11 @@ human.add(hana)
 
 human.print()
 ```
+
 型アサーション [as クラス]
 
 ### テンプレートリテラルについて
+
 ```
 const data = [10,20,30]
 const msg = `data is [${data}]`
@@ -1852,11 +1874,13 @@ console.log(result)
 ```
 
 ### テンプレートリテラル型について
+
 ```
 type 名前= `テンプレートリテラル`
 ```
 
 定型の名前の型を作る
+
 ```
 type val_name= "sample"|"private"|"public"
 type data_type = `${val_name}_data`
@@ -1869,12 +1893,14 @@ const u:method_type = "private_method"
 const v:data_type = "personal_data" //エラーとなる
 ```
 
-### Record型によるレコードデータ作成
+### Record 型によるレコードデータ作成
+
 ```
 type 型名 = Record<キー|値>
 ```
 
-Record型でデータを作成
+Record 型でデータを作成
+
 ```
 type prop_name = 'name' | 'mail' | 'age' //ユニオン型
 type Person = Record<prop_name,string|number> //ユニオン型をキーに指定
@@ -1896,8 +1922,10 @@ console.log(taro)
 
 ```
 
-### Pick型による項目の選別
+### Pick 型による項目の選別
+
 既に用意されているタイプから必要な項目だけを抜き出した新しいタイプを作りたい
+
 ```
 // 変数 = Pick<型,キー>
 
@@ -1929,9 +1957,11 @@ console.log(taro)
 console.log(hana)
 ```
 
-### イテレータとfor...of
-for...ofではfor..inとは違い配列にあるようそだけを確実に取り出せる
+### イテレータと for...of
+
+for...of では for..in とは違い配列にあるようそだけを確実に取り出せる
 多数ある値から順に要素を取り出していくことができる仕組みをイテレータと呼ぶ。
+
 ```
 [Symbol.iterator](){
     return {
@@ -1941,8 +1971,10 @@ for...ofではfor..inとは違い配列にあるようそだけを確実に取�
     }
 }
 ```
+
 この[Symbol.iterator]は関数になっており、next():IteratorResult<T> という関数を持つオブジェクトを返すような処理が用意されています。
-このnext関数では,IteratorResultというインターフェースの値を返すようになっています。これはdoneとvalueという値を持つマップ型の値です。
+この next 関数では,IteratorResult というインターフェースの値を返すようになっています。これは done と value という値を持つマップ型の値です。
+
 ```
 class MyData<T> {
     data:T[]=[]
@@ -1986,15 +2018,18 @@ for (let item of data) {
 ```
 
 ### 名前空間について
+
 プログラムで作成する様々な要素を配置する仮想的な場所。
 既にある関数やクラスと名前がバッティングしてしまう可能性も生じる。
+
 ```
 namespace 名前{
 ...
 }
 ```
 
-外部から利用できるようにするためにexportを使う
+外部から利用できるようにするために export を使う
+
 ```
 namespace 名前{
     export function 関数(){}
@@ -2002,17 +2037,20 @@ namespace 名前{
 }
 以下のようなかたちで使う
 ```
+
 名前空間.関数()
 new 名前空間.クラス
+
 ```
 
 
 ```
+
 namespace myapp {
-    namespace foundation {
-        export interface printable {
-            print():void
-        }
+namespace foundation {
+export interface printable {
+print():void
+}
 
         export interface stringable {
             getString():string
@@ -2043,12 +2081,14 @@ namespace myapp {
                 return res + ']'
             }
         }
+
 }
 
 const mydata = new myapp.MyData()
 mydata.add('taro',39)
 mydata.add('hanako',28)
 mydata.print()
+
 ```
 
 ### モジュールとプログラムの分割
@@ -2057,38 +2097,39 @@ export：記述された要素を外部から利用できるようにするた�
 import ファイルなどのリソースから指定した要素を読込につかえるようにするためのもの
 
 ```
+
 export interface printable {
-  print():void
+print():void
 }
 
 export interface stringable {
-  getString():string
+getString():string
 }
 
 export type Person = {
-  name: string
-  age:number
+name: string
+age:number
 }
 
 export class MyData implements printable,stringable {
-  people: Person[] =[]
-  constructor() { }
+people: Person[] =[]
+constructor() { }
 
-  add(nm: string, ag: number) {
-    this.people.push({name:nm, age:ag})
-  }
+add(nm: string, ag: number) {
+this.people.push({name:nm, age:ag})
+}
 
-  print(): void {
-    console.log('*** mydata *** \n' + this.getString())
-  }
+print(): void {
+console.log('**_ mydata _** \n' + this.getString())
+}
 
-  getString(): string {
-    let res = '[\n'
-    for (let item of this.people) {
-      res += ' "' + item.name + ' (' + item.age + ')",\n'
-    }
-    return res + ']'
-  }
+getString(): string {
+let res = '[\n'
+for (let item of this.people) {
+res += ' "' + item.name + ' (' + item.age + ')",\n'
+}
+return res + ']'
+}
 }
 
 ```
@@ -2098,44 +2139,47 @@ TypeScriptは１つのクラスしか継承できない。
 複数のクラスを継承することを多重継承とよぶが、TypeScriptがサポートしていない
 TypeScriptではミックスインという技術があり、複数のクラスをまとめて実装できる。
 ```
+
 function applyMixins(delivedCtor: any, constructors:any[]){
-    constructors.forEach((baseCtor)=> {
-        Object.getOwnPropertyNames(baseCtor.prototype).forEach((name)=>{
-            Object.defineProperty(
-                delivedCtor.prototype,
-                name,
-                Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
-                Object.create(null)
-            )
-        })
-    })
+constructors.forEach((baseCtor)=> {
+Object.getOwnPropertyNames(baseCtor.prototype).forEach((name)=>{
+Object.defineProperty(
+delivedCtor.prototype,
+name,
+Object.getOwnPropertyDescriptor(baseCtor.prototype, name) ||
+Object.create(null)
+)
+})
+})
 }
 
 class Person {
-    name:string = ''
-    title:string = ''
+name:string = ''
+title:string = ''
 
     setPerson(nm:string, tt:string):void{
         this.name = nm
         this.title = tt
     }
+
 }
 
 class Pet {
-    kind:string = ''
-    age:number = 0
+kind:string = ''
+age:number = 0
 
     setPet(k:string, ag:number):void {
         this.kind =k
         this.age =ag
     }
+
 }
 
 class Me {
-    print():void {
-        console.log(this.name + ' (' + this.age + ')\n' +
-         '"' + this.title + '". pet is ' + this.kind + '!')
-    }
+print():void {
+console.log(this.name + ' (' + this.age + ')\n' +
+'"' + this.title + '". pet is ' + this.kind + '!')
+}
 }
 
 interface Me extends Person,Pet {}
@@ -2150,47 +2194,78 @@ me.print()
 
 ### 非同期処理
 ```
+
 function action(dt:number) {
-    return new Promise(resolve=>{
-        setTimeout(()=>{
-            console.log('fished promese!')
-            resolve("delay:" + dt)
-        },dt)
-    })
+return new Promise(resolve=>{
+setTimeout(()=>{
+console.log('fished promese!')
+resolve("delay:" + dt)
+},dt)
+})
 }
 
 action(2000).then(res=>console.log(res))
 action(1000).then(res=>console.log(res))
 action(500).then(res=>console.log(res))
+
 ```
 
 ### awaitで終わるまで待つ
 処理が終わるまで待つawaitはasyncの関数のなかでしか使えない
 ```
+
 //async 関数(){
-//    変数 = await 非同期関数()
+// 変数 = await 非同期関数()
 //}
 
 function action(dt:number) {
-    return new Promise(resolve=>{
-        setTimeout(()=>{
-            console.log('fished promese!')
-            resolve("delay:" + dt)
-        },dt)
-    })
+return new Promise(resolve=>{
+setTimeout(()=>{
+console.log('fished promese!')
+resolve("delay:" + dt)
+},dt)
+})
 }
 
 async function doit(){
-    let re1 = await action(2000)
-    console.log(re1)
-    let re2 = await action(1000)
-    console.log(re2)
-    let re3 = await action(500)
-    console.log(re3)
+let re1 = await action(2000)
+console.log(re1)
+let re2 = await action(1000)
+console.log(re2)
+let re3 = await action(500)
+console.log(re3)
 }
 
 doit()
 
 ```
 
+### ネットワークアクセス
+```
 
+function getData(url:string) {
+fetch(url).then(res=>res.text()).then(re=>{
+console.log(re)
+})
+}
+
+const url = 'https://tuyano-dummy-data.firebaseio.com/message.json'
+getData(url)
+
+```
+
+サーバーからJSONデータを得る
+```
+
+function getData(url:string) {
+fetch(url).then(res=>res.json()).then(re=> {
+for(let item of re){
+console.log(item)
+}
+})
+}
+
+```
+
+
+```
