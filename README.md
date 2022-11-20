@@ -2148,3 +2148,49 @@ me.print()
 
 ```
 
+### 非同期処理
+```
+function action(dt:number) {
+    return new Promise(resolve=>{
+        setTimeout(()=>{
+            console.log('fished promese!')
+            resolve("delay:" + dt)
+        },dt)
+    })
+}
+
+action(2000).then(res=>console.log(res))
+action(1000).then(res=>console.log(res))
+action(500).then(res=>console.log(res))
+```
+
+### awaitで終わるまで待つ
+処理が終わるまで待つawaitはasyncの関数のなかでしか使えない
+```
+//async 関数(){
+//    変数 = await 非同期関数()
+//}
+
+function action(dt:number) {
+    return new Promise(resolve=>{
+        setTimeout(()=>{
+            console.log('fished promese!')
+            resolve("delay:" + dt)
+        },dt)
+    })
+}
+
+async function doit(){
+    let re1 = await action(2000)
+    console.log(re1)
+    let re2 = await action(1000)
+    console.log(re2)
+    let re3 = await action(500)
+    console.log(re3)
+}
+
+doit()
+
+```
+
+
