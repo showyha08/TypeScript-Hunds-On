@@ -2287,3 +2287,40 @@ const url = 'https://tuyano-dummy-data.firebaseio.com/sample_data.json'
 getData(url)
 
 ```
+
+### POST
+fetchでGET以外のリクエストメソッドを利用する場合はどうすれば良いでしょう。
+fetchの第２引数にオプション情報をまとめたオブジェクトを用意することで対応します。
+```
+fetch (アクセス先, オブジェクト)
+
+//最低でも以下の値が必要
+{method:'POST',body:テキスト}
+```
+
+### Firebaseサーバにデータを送信する
+```
+async function getData(url:string,obj:object){
+    await fetch(url, {
+    method:'POST',
+    mode:'cors',
+    headers:{
+        'Content-Type':'aplication/json'
+    },
+    body: JSON.stringify(obj)
+    })
+
+    const response = await fetch(url)
+    const result = await response.json()
+    console.log(JSON.stringify(result))
+}
+const url = 'https://tuyano-dummy-data.firebaseio.com/sample_message.json'
+
+const obj = {
+    title:'Hello!',
+    message:'This is sample message!'
+}
+
+getData(url,obj)
+
+```
