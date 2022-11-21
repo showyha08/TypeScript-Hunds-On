@@ -2035,17 +2035,14 @@ namespace 名前{
     export function 関数(){}
     export class クラス{}
 }
-以下のようなかたちで使う
 ```
 
+以下のようなかたちで使う
 名前空間.関数()
 new 名前空間.クラス
 
-```
-
 
 ```
-
 namespace myapp {
 namespace foundation {
 export interface printable {
@@ -2267,5 +2264,26 @@ console.log(item)
 
 ```
 
+### ネットワークに同期アクセスする
+基本は非同期処理だが、Promiseを使わない分ソースがシンプルになる。
+```
+// asycn/awaiと使う
+変数 = await fetch(アクセス先)
+
+変数 = await オブジェクト.json()
+```
+
+### Firebaseアクセスを非同期化する
+
+```
+async function getData(url:string) {
+    const response = await fetch(url)
+    const result = await response.json()
+    for (let item of result){
+        console.log(JSON.stringify(item))
+    }
+}
+const url = 'https://tuyano-dummy-data.firebaseio.com/sample_data.json'
+getData(url)
 
 ```
