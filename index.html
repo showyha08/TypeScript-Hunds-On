@@ -16,14 +16,25 @@
   <body>
     <h1 class="bg-primary text-white p-2">Memo page</h1>
     <div class="container">
-      <p class="h5">type message:</p>
+      <h2>send message:</h2>
       <div class="alert alert-primary">
-        <input type="text" class="form-control" id="message" />
-        <button class="btn btn-primary mt-2" id="btn">Save</button>
-      </div>
-      <table class="table" id="table"></table>
-      <div class="text-center">
-        <button class="btn btn-danger mt-4" id="initial">Initialize</button>
+        <div>
+          <label>your nickname:</label>
+          <input
+            type="text"
+            id="nickname"
+            class="form-control form-control-sm"
+          />
+        </div>
+        <div>
+          <label>message:</label>
+          <input type="text" class="form-control" id="message" />
+        </div>
+        <button class="btn btn-primary mt-2" id="btn">fetch</button>
+        <table class="table mb-4" id="table"></table>
+        <div class="text-center">
+          <button class="btn btn-danger mb-4" id="delete">delete all</button>
+        </div>
       </div>
     </div>
   </body>
