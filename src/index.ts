@@ -1,14 +1,25 @@
 let msg: HTMLParagraphElement;
 
 const html = `<h2><a id="title">This is message</a></h2>
-<p>これはTypeScriptで表示したコンテンツです。</p>`;
+<p>これはTypeScriptで表示したコンテンツです。</p>
+<div id ="content">wait...</div>`;
 
 window.addEventListener("load", () => {
   msg = document.querySelector("#msg");
   msg.innerHTML = html;
-  const title: HTMLAnchorElement = document.querySelector("#title");
-  title.href = "https://google.com/";
+  const content: HTMLDivElement = document.querySelector("#content");
+  setDiv(content);
 });
+
+function setDiv(content: HTMLDivElement) {
+  content.style.width = "300px";
+  content.style.height = "300px";
+  content.style.borderWidth = "3px";
+  content.style.borderStyle = "solid";
+  content.style.borderColor = "red";
+  content.style.backgroundColor = "white";
+  content.textContent = "";
+}
 
 // let nickname: HTMLInputElement;
 // let message: HTMLInputElement;
